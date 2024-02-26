@@ -85,7 +85,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-- **Your Name** - *Initial work* - [YourUsername](https://github.com/<your-username>)
+- **Camille yver* - *Initial work* - [CamilleYv](https://github.com/CamilleYv)
 
 ## License
 
