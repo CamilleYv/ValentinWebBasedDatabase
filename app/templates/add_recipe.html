@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Add Recipe{% endblock %}
+
+{% block content %}
+<h2>Add New Recipe</h2>
+<form id="recipeForm" method="post">
+    <div class="form-group">
+        <label for="recipeName">Recipe Name:</label>
+        <input type="text" id="recipeName" name="recipeName" required>
+    </div>
+    <div id="ingredientsList" class="form-group">
+        <!-- Ingredient rows will be added here -->
+    </div>
+    <button type="button" onclick="addIngredient()">Add Ingredient</button>
+    <input type="submit" value="Create Recipe">
+</form>
+
+<script>
+    function addIngredient() {
+        const ingredientsList = document.getElementById('ingredientsList');
+        const row = document.createElement('div');
+        row.className = 'ingredient-row';
+        row.innerHTML = `
+            <select name="ingredient[]" required>
+                <option value="">Select Ingredient</option>
+                <option value="flour">Flour</option>
+                <option value="water">Water</option>
+                <option value="sugar">Sugar</option>
+                <!-- Populate with more ingredients as needed -->
+            </select>
+            <input type="number" name="quantity[]" placeholder="Quantity" step="0.01" required>
+            <button type="button" class="delete-btn" onclick="deleteIngredient(this)">Delete</button>
+        `;
+        ingredientsList.appendChild(row);
+    }
+
+    function deleteIngredient(element) {
+        element.parentElement.remove();
+    }
+
+    document.getElementById('recipeForm').onsubmit = function(event) {
+        event.preventDefault();
+        // Collect data here and send it to the server
+        // Example: use FormData to gather the input and send via Fetch API
+        alert('Recipe submitted!');
+    }
+
+    // Initialize with one ingredient row
+    window.onload = addIngredient;
+</script>
+{% endblock %}
