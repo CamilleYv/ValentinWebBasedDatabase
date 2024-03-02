@@ -10,12 +10,10 @@ def create_and_test_ingredients():
     bread = Recipe(name='Bread', price=0.0)
 
     # Add ingredients to the recipe
-    bread.ingredients.append(flour)
-    bread.ingredients.append(water)
+    bread.add_ingredient(flour)
+    bread.add_ingredient(water)
     db.session.add(bread)
-    db.session.flush()
     # Save to database
-    db.session.add(bread)
     db.session.commit()
 
     # Display the recipe and its ingredients
@@ -24,7 +22,7 @@ def create_and_test_ingredients():
         print(f"Ingredient: {ingredient.name}, Price: {ingredient.price}")
 
     # Remove an ingredient and show the update
-    bread.ingredients.remove(flour)
+    bread.remove_ingredient(flour)
     db.session.commit()
     print(f"After removing flour, Recipe: {bread.name}, Price: {bread.price}")
     
