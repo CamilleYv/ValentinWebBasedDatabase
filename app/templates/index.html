@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to My Website</h1>
+    <p>This is the home page of your Flask application. From here, you can navigate to different parts of the website.</p>
+    <div class="links">
+        <a href="{{ url_for('add_raw_material') }}" class="btn">Add Raw Material</a>
+        <a href="{{ url_for('add_recipe') }}" class="btn">Add Recipe</a>
+    </div>
+</div>
+{% endblock %}
