@@ -1,7 +1,6 @@
-from sqlalchemy.orm import relationship
 from sqlalchemy import Integer, String, Column, ForeignKey,Float, Table,event
 from sqlalchemy.orm import relationship, backref
-from app import db
+from extension import db
 
 class Ingredient(db.Model):
     __tablename__ = 'ingredient'
@@ -29,6 +28,7 @@ class Recipe(Ingredient):
         "Ingredient",
         secondary="ingredient_association",
         backref=backref("recipes"),
+        cascade="all, delete"
     )
     __mapper_args__ = {
         'polymorphic_identity': 'recipe',
@@ -39,9 +39,7 @@ class Recipe(Ingredient):
                 self.ingredients.append(unique_ingredient)
         else:
             self.ingredients.append(ingredient)
-        print(self.price)
         self.update_price()
-        print(self.price)
 
     def remove_ingredient(self, ingredient):
         if isinstance(ingredient, list):
@@ -55,21 +53,9 @@ class Recipe(Ingredient):
 
     def update_price(self):
         self.price = sum([ingredient.price for ingredient in self.ingredients])
+        
 
 ingredient_association = Table('ingredient_association', db.Model.metadata,
 	Column('recipe_id', Integer, ForeignKey('recipe.id')),
 	Column('ingredient_id', Integer, ForeignKey('ingredient.id'))
 )
-
-# @event.listens_for(db.session, 'after_flush')
-# def after_flush(session, _flush_context):
-# 	for instance in session.new.union(session.dirty):
-# 		if isinstance(instance, Recipe):
-# 			instance.update_price()
-# 			print(instance.price)
-
-# @event.listens_for(Recipe.ingredients, 'append')
-# def append(target, value, initiator):
-#     target.ingredients.append(value)
-#     target.update_price()
-#     return
